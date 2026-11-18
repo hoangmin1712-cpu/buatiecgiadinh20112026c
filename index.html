@@ -2,7 +2,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Thẻ quan trọng giúp tự động fit màn hình điện thoại -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tiệc Lẩu 20/10 - Chốt Đơn & Chuẩn Bị</title>
     <!-- Font chữ hiện đại -->
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,10 +18,10 @@
             --primary-dark: #e84118;
             --secondary: #ffa502;
             --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #ffe3e3 100%);
-            --glass: rgba(255, 255, 255, 0.92);
+            --glass: rgba(255, 255, 255, 0.95);
             --text-main: #2f3542;
             --text-sub: #747d8c;
-            --shadow: 0 10px 30px rgba(255, 71, 87, 0.12);
+            --shadow: 0 8px 25px rgba(255, 71, 87, 0.1);
         }
 
         * {
@@ -28,13 +29,18 @@
             margin: 0;
             padding: 0;
             font-family: 'Be Vietnam Pro', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background: var(--bg-gradient);
             color: var(--text-main);
             min-height: 100vh;
-            padding: 20px;
+            padding: 12px;
+        }
+
+        @media (min-width: 768px) {
+            body { padding: 20px; }
         }
 
         /* Màn hình nhập tên */
@@ -47,14 +53,15 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
+            padding: 20px;
         }
 
         .login-box {
             background: white;
-            padding: 40px 30px;
+            padding: 30px 20px;
             border-radius: 24px;
-            width: 90%;
-            max-width: 420px;
+            width: 100%;
+            max-width: 380px;
             text-align: center;
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -67,14 +74,14 @@
 
         .login-box h2 {
             color: var(--primary);
-            font-size: 26px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 8px;
         }
 
         .login-box p {
             color: var(--text-sub);
-            margin-bottom: 25px;
-            font-size: 14px;
+            margin-bottom: 20px;
+            font-size: 13px;
         }
 
         .input-group {
@@ -84,12 +91,13 @@
 
         input, select {
             width: 100%;
-            padding: 14px 16px;
+            padding: 12px 14px;
             border: 2px solid #dfe4ea;
             border-radius: 12px;
-            font-size: 15px;
+            font-size: 14px;
             outline: none;
             transition: 0.3s;
+            background: #fff;
         }
 
         input:focus, select:focus {
@@ -100,10 +108,10 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 14px 24px;
+            padding: 12px 20px;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.3s;
             display: inline-flex;
@@ -112,108 +120,151 @@
             gap: 8px;
         }
 
-        .btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+        .btn:active {
+            transform: scale(0.96);
         }
 
         .btn-full { width: 100%; }
 
-        /* Giao diện chính */
+        /* Header tối ưu di động */
         .header {
-            max-width: 1200px;
-            margin: 0 auto 25px;
+            max-width: 1100px;
+            margin: 0 auto 15px;
             background: var(--glass);
-            padding: 20px 30px;
-            border-radius: 20px;
+            padding: 15px 20px;
+            border-radius: 16px;
             box-shadow: var(--shadow);
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        @media (min-width: 600px) {
+            .header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 18px 25px;
+                border-radius: 20px;
+                margin-bottom: 20px;
+            }
         }
 
         .header-title h1 {
-            font-size: 24px;
+            font-size: 20px;
             color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+        }
+
+        @media (min-width: 600px) {
+            .header-title h1 { font-size: 24px; }
+        }
+
+        .user-info-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        @media (min-width: 600px) {
+            .user-info-wrapper { width: auto; justify-content: flex-start; gap: 10px; }
         }
 
         .user-badge {
             background: #ffeaa7;
             color: #d35400;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 50px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
+        /* Container chia cột linh hoạt */
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            gap: 25px;
+            grid-template-columns: 1fr;
+            gap: 15px;
         }
 
-        @media (max-width: 850px) {
-            .container { grid-template-columns: 1fr; }
+        @media (min-width: 900px) {
+            .container {
+                grid-template-columns: 1.3fr 1fr;
+                gap: 20px;
+            }
         }
 
         .card {
             background: var(--glass);
-            border-radius: 20px;
-            padding: 25px;
+            border-radius: 16px;
+            padding: 16px;
             box-shadow: var(--shadow);
         }
 
+        @media (min-width: 600px) {
+            .card {
+                border-radius: 20px;
+                padding: 22px;
+            }
+        }
+
         .card-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid #f1f2f6;
-            padding-bottom: 12px;
+            padding-bottom: 10px;
         }
 
-        /* Form thêm món mới */
+        @media (min-width: 600px) {
+            .card-title { font-size: 18px; margin-bottom: 18px; }
+        }
+
+        /* Form thêm món trên mobile xếp dọc gọn gàng */
         .add-custom-form {
             display: grid;
-            grid-template-columns: 2fr 1.2fr 1fr auto;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        @media (max-width: 600px) {
-            .add-custom-form { grid-template-columns: 1fr; }
-        }
-
-        /* Bộ lọc danh mục */
-        .categories {
-            display: flex;
+            grid-template-columns: 1fr;
             gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 10px;
             margin-bottom: 15px;
         }
 
+        @media (min-width: 600px) {
+            .add-custom-form {
+                grid-template-columns: 2fr 1.2fr 1fr auto;
+                gap: 8px;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Bộ lọc danh mục lướt ngang mượt trên đt */
+        .categories {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            scrollbar-width: none; /* Ẩn thanh cuộn trên Firefox */
+        }
+        .categories::-webkit-scrollbar { display: none; } /* Ẩn thanh cuộn trên Chrome/Safari */
+
         .cat-btn {
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 20px;
             border: 1px solid #dfe4ea;
             background: white;
             cursor: pointer;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 12px;
             white-space: nowrap;
             transition: 0.2s;
         }
@@ -224,167 +275,170 @@
             border-color: var(--primary);
         }
 
-        /* Danh sách gợi ý món */
+        /* Danh sách gợi ý món (Grid tự co giãn) */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        @media (min-width: 500px) {
+            .menu-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
         .menu-item {
             background: white;
             border: 1px solid #f1f2f6;
-            border-radius: 16px;
-            padding: 15px;
+            border-radius: 14px;
+            padding: 12px 10px;
             text-align: center;
-            transition: 0.25s;
+            transition: 0.2s;
             cursor: pointer;
-            position: relative;
         }
 
-        .menu-item:hover {
-            transform: translateY(-4px);
+        .menu-item:active {
+            transform: scale(0.97);
             border-color: var(--primary);
-            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.15);
         }
 
         .menu-emoji {
-            font-size: 32px;
-            margin-bottom: 8px;
+            font-size: 28px;
+            margin-bottom: 6px;
             display: block;
         }
 
         .menu-name {
             font-weight: 700;
-            font-size: 14px;
-            margin-bottom: 4px;
+            font-size: 13px;
+            margin-bottom: 3px;
+            color: var(--text-main);
         }
 
         .menu-cat {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-sub);
             background: #f1f2f6;
-            padding: 2px 8px;
-            border-radius: 10px;
+            padding: 2px 6px;
+            border-radius: 8px;
             display: inline-block;
         }
 
-        /* Cột bên phải: Danh sách chuẩn bị */
+        /* Danh sách chuẩn bị bên phải */
         .shopping-list {
-            max-height: 450px;
+            max-height: 380px;
             overflow-y: auto;
-            padding-right: 5px;
+            padding-right: 2px;
+        }
+
+        @media (min-width: 900px) {
+            .shopping-list { max-height: 420px; }
         }
 
         .list-item {
             background: white;
-            padding: 12px 15px;
-            border-radius: 14px;
-            margin-bottom: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-left: 4px solid var(--primary);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(15px); }
-            to { opacity: 1; transform: translateX(0); }
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
 
         .list-item.checked {
-            opacity: 0.6;
+            opacity: 0.5;
             border-left-color: #2ed573;
             text-decoration: line-through;
         }
 
         .item-info h4 {
-            font-size: 15px;
-            margin-bottom: 4px;
+            font-size: 14px;
+            margin-bottom: 3px;
         }
 
         .item-meta {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-sub);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .author-tag {
             background: #eccc68;
             color: #2f3542;
-            padding: 2px 8px;
-            border-radius: 6px;
+            padding: 1px 6px;
+            border-radius: 5px;
             font-weight: 600;
-            font-size: 11px;
+            font-size: 10px;
         }
 
         .item-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .qty-badge {
             background: #ff47571a;
             color: var(--primary);
             font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 13px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 12px;
         }
 
         .icon-btn {
             background: #f1f2f6;
             border: none;
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             border-radius: 8px;
             cursor: pointer;
             color: var(--text-main);
-            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
         }
+        .icon-btn.del:hover, .icon-btn.del:active { background: #ff4757; color: white; }
+        .icon-btn.check:hover, .icon-btn.check:active { background: #2ed573; color: white; }
 
-        .icon-btn:hover { background: #dfe4ea; }
-        .icon-btn.del:hover { background: #ff4757; color: white; }
-        .icon-btn.check:hover { background: #2ed573; color: white; }
-
+        /* Mini game góc nhân phẩm */
         .fun-box {
-            margin-top: 20px;
+            margin-top: 15px;
             background: linear-gradient(135deg, #2f3542, #1e272e);
             color: white;
-            padding: 20px;
+            padding: 16px;
             border-radius: 16px;
             text-align: center;
         }
 
         .fun-box h3 {
             color: #ffa502;
-            font-size: 16px;
-            margin-bottom: 8px;
+            font-size: 15px;
+            margin-bottom: 6px;
         }
 
         #spin-result {
-            margin-top: 12px;
-            font-size: 16px;
+            margin-top: 10px;
+            font-size: 14px;
             font-weight: 700;
             color: #2ed573;
-            min-height: 24px;
+            min-height: 22px;
         }
 
         .status-bar {
-            font-size: 12px;
+            font-size: 11px;
             color: #2ed573;
             display: flex;
             align-items: center;
             gap: 5px;
-            margin-top: 4px;
+            margin-top: 2px;
         }
         .dot {
-            width: 8px; height: 8px;
+            width: 7px; height: 7px;
             background: #2ed573;
             border-radius: 50%;
             display: inline-block;
@@ -399,14 +453,14 @@
 </head>
 <body>
 
-    <!-- Modal Nhập Tên (Chỉ hiện 1 lần duy nhất, lần sau tự nhớ) -->
+    <!-- Modal Nhập Tên -->
     <div id="login-modal" style="display: none;">
         <div class="login-box">
-            <div style="font-size: 48px; margin-bottom: 10px;">🍲🌸</div>
+            <div style="font-size: 40px; margin-bottom: 8px;">🍲🌸</div>
             <h2>Tiệc Lẩu 20/10</h2>
-            <p>Nhập tên của bạn để cùng hội bạn thân lên thực đơn nhé!</p>
+            <p>Nhập tên của bạn để cùng hội bạn lên thực đơn nhé!</p>
             <div class="input-group">
-                <input type="text" id="username-input" placeholder="Ví dụ: Minh dzs1 kimson, Chi Huy..." maxlength="25">
+                <input type="text" id="username-input" placeholder="Ví dụ: Chi Huy, Minh..." maxlength="25">
             </div>
             <button class="btn btn-full" onclick="joinParty()">
                 <i class="fa-solid fa-utensils"></i> Vào Bàn Tiệc Ngay
@@ -422,11 +476,11 @@
                 <span class="dot"></span> <span id="sync-status">Đang kết nối hệ thống...</span>
             </div>
         </div>
-        <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="user-info-wrapper">
             <div class="user-badge">
-                <i class="fa-solid fa-user-check"></i> <span id="current-user-display">Khách</span>
+                <i class="fa-solid fa-user-check"></i> <span id="current-user-display">Chi Huy</span>
             </div>
-            <button class="icon-btn" title="Đổi tên" onclick="changeName()"><i class="fa-solid fa-pen"></i></button>
+            <button class="icon-btn" title="Đổi tên" onclick="changeName()" style="width: 34px; height: 34px; background: #fff;"><i class="fa-solid fa-pen"></i></button>
         </div>
     </header>
 
@@ -440,7 +494,7 @@
 
             <!-- Form tự thêm món mới -->
             <div class="add-custom-form">
-                <input type="text" id="custom-name" placeholder="Tên món (VD: Bắp bò Mỹ...)">
+                <input type="text" id="custom-name" placeholder="Tên món (VD: Bắp bò...)">
                 <select id="custom-cat">
                     <option value="Thịt & Hải sản">🥩 Thịt & Hải sản</option>
                     <option value="Rau & Nấm">🥬 Rau & Nấm</option>
@@ -455,10 +509,10 @@
             <!-- Bộ lọc -->
             <div class="categories" id="category-filters">
                 <button class="cat-btn active" onclick="filterMenu('All', this)">Tất cả</button>
-                <button class="cat-btn" onclick="filterMenu('Thịt & Hải sản', this)">🥩 Thịt & Hải sản</button>
-                <button class="cat-btn" onclick="filterMenu('Viên thả lẩu', this)">🍡 Viên thả lẩu</button>
-                <button class="cat-btn" onclick="filterMenu('Rau & Nấm', this)">🥬 Rau & Nấm</button>
-                <button class="cat-btn" onclick="filterMenu('Nước lẩu & Mì', this)">🍜 Nước lẩu & Mì</button>
+                <button class="cat-btn" onclick="filterMenu('Thịt & Hải sản', this)">🥩 Thịt</button>
+                <button class="cat-btn" onclick="filterMenu('Viên thả lẩu', this)">🍡 Viên lẩu</button>
+                <button class="cat-btn" onclick="filterMenu('Rau & Nấm', this)">🥬 Rau nấm</button>
+                <button class="cat-btn" onclick="filterMenu('Nước lẩu & Mì', this)">🍜 Nước & Mì</button>
                 <button class="cat-btn" onclick="filterMenu('Đồ uống & Khác', this)">🥤 Đồ uống</button>
             </div>
 
@@ -470,25 +524,25 @@
         <div>
             <div class="card">
                 <div class="card-title">
-                    <span><i class="fa-solid fa-clipboard-list" style="color: #2ed573;"></i> Danh Sách Chuẩn Bị (<span id="total-items">0</span>)</span>
+                    <span><i class="fa-solid fa-clipboard-list" style="color: #2ed573;"></i> Danh Sách (<span id="total-items">0</span>)</span>
                     <button class="icon-btn del" title="Xóa tất cả" onclick="clearAllItems()"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
 
                 <div class="shopping-list" id="shopping-list">
-                    <p style="text-align: center; color: var(--text-sub); padding: 30px 0;">Chưa có món nào. Hãy chọn món bên cạnh nhé!</p>
+                    <p style="text-align: center; color: var(--text-sub); padding: 25px 0; font-size: 13px;">Chưa có món nào. Hãy chọn món bên trên nhé!</p>
                 </div>
             </div>
 
             <!-- Mini game -->
             <div class="fun-box">
                 <h3>🎲 Góc Nhân Phẩm 20/10</h3>
-                <p style="font-size: 13px; color: #ced6e0; margin-bottom: 12px;">Ai sẽ là người rửa bát hoặc đi chợ?</p>
+                <p style="font-size: 12px; color: #ced6e0; margin-bottom: 10px;">Ai sẽ là người rửa bát hoặc đi chợ?</p>
                 <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn" style="background: #ffa502; color: #2f3542; padding: 10px 16px; font-size: 13px;" onclick="spinWheel('rửa bát 🧽')">
-                        Quay người Rửa Bát
+                    <button class="btn" style="background: #ffa502; color: #2f3542; padding: 8px 14px; font-size: 12px;" onclick="spinWheel('rửa bát 🧽')">
+                        Quay Rửa Bát
                     </button>
-                    <button class="btn" style="background: #2ed573; color: #2f3542; padding: 10px 16px; font-size: 13px;" onclick="spinWheel('đi chợ 🛒')">
-                        Quay người Đi Chợ
+                    <button class="btn" style="background: #2ed573; color: #2f3542; padding: 8px 14px; font-size: 12px;" onclick="spinWheel('đi chợ 🛒')">
+                        Quay Đi Chợ
                     </button>
                 </div>
                 <div id="spin-result"></div>
@@ -502,7 +556,7 @@
         import { getDatabase, ref, push, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
-            databaseURL: "" // Nếu bạn đã dùng Firebase thì dán link vào đây, bỏ trống sẽ chạy offline trên máy
+            databaseURL: "" // Dán link Firebase Realtime Database của bạn vào đây nếu muốn đồng bộ online
         };
 
         let useFirebase = false;
@@ -539,19 +593,19 @@
             { name: "Trà đào / Nước ép", cat: "Đồ uống & Khác", emoji: "🍹", qty: "2 chai" }
         ];
 
-        let currentUser = localStorage.getItem('lau_username') || "";
+        let currentUser = localStorage.getItem('lau_username') || "Chi Huy";
         let currentItems = [];
 
         window.onload = () => {
             renderSuggestedMenu('All');
             
-            // KIỂM TRA: Nếu chưa có tên trong bộ nhớ thì mới hiện bảng nhập tên
-            if (!currentUser) {
-                document.getElementById('login-modal').style.display = 'flex';
-            } else {
-                document.getElementById('login-modal').style.display = 'none';
-                document.getElementById('current-user-display').innerText = currentUser;
+            if (!localStorage.getItem('lau_username')) {
+                currentUser = "Chi Huy";
+                localStorage.setItem('lau_username', currentUser);
             }
+            
+            document.getElementById('login-modal').style.display = 'none';
+            document.getElementById('current-user-display').innerText = currentUser;
             listenData();
         };
 
@@ -559,13 +613,12 @@
             const input = document.getElementById('username-input').value.trim();
             if (!input) return alert("Vui lòng nhập tên của bạn nhé!");
             currentUser = input;
-            localStorage.setItem('lau_username', currentUser); // Lưu tên vĩnh viễn trên trình duyệt
+            localStorage.setItem('lau_username', currentUser);
             document.getElementById('current-user-display').innerText = currentUser;
             document.getElementById('login-modal').style.display = 'none';
             confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
         };
 
-        // Nút đổi tên (nếu lỡ nhập sai tên)
         window.changeName = () => {
             document.getElementById('username-input').value = currentUser;
             document.getElementById('login-modal').style.display = 'flex';
@@ -647,7 +700,7 @@
             document.getElementById('total-items').innerText = currentItems.length;
 
             if (currentItems.length === 0) {
-                listEl.innerHTML = `<p style="text-align: center; color: var(--text-sub); padding: 30px 0;">Chưa có món nào. Hãy chọn món bên cạnh nhé!</p>`;
+                listEl.innerHTML = `<p style="text-align: center; color: var(--text-sub); padding: 25px 0; font-size: 13px;">Chưa có món nào. Hãy chọn món bên trên nhé!</p>`;
                 return;
             }
 
