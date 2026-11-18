@@ -3,150 +3,748 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Face Analyzer - Premium Version</title>
+    <title>Tiệc Lẩu 20/10 - Chốt Đơn & Chuẩn Bị</title>
+    <!-- Font chữ hiện đại -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Thư viện Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Hiệu ứng pháo hoa -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <style>
-        :root { --primary: #ff758c; --secondary: #ff7eb3; --glass: rgba(255, 255, 255, 0.9); }
-        body { margin: 0; background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%); font-family: 'Segoe UI', Tahoma, sans-serif; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-        
-        #main-card { background: var(--glass); width: 90%; max-width: 450px; border-radius: 30px; padding: 40px 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); text-align: center; position: relative; backdrop-filter: blur(10px); }
-        
-        h1 { color: #d63384; font-size: 24px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .subtitle { color: #666; font-size: 14px; margin-bottom: 25px; }
+        :root {
+            --primary: #ff4757;
+            --primary-dark: #e84118;
+            --secondary: #ffa502;
+            --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #ffe3e3 100%);
+            --glass: rgba(255, 255, 255, 0.92);
+            --text-main: #2f3542;
+            --text-sub: #747d8c;
+            --shadow: 0 10px 30px rgba(255, 71, 87, 0.12);
+        }
 
-        /* Khung hiển thị ảnh */
-        #upload-zone { border: 2px dashed #ff758c; border-radius: 20px; padding: 30px; cursor: pointer; transition: 0.3s; position: relative; overflow: hidden; min-height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        #upload-zone:hover { background: rgba(255, 117, 140, 0.1); }
-        #preview-img { width: 100%; border-radius: 15px; display: none; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
 
-        /* Radar quét */
-        #scanner { position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: rgba(255, 255, 255, 0.8); box-shadow: 0 0 15px #fff, 0 0 30px #ff758c; display: none; z-index: 10; animation: scanMove 2s infinite ease-in-out; }
-        @keyframes scanMove { 0% { top: 0; } 50% { top: 100%; } 100% { top: 0; } }
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-        /* Hiệu ứng loading */
-        .loading-box { display: none; margin-top: 20px; }
-        .progress-bar { width: 100%; height: 10px; background: #eee; border-radius: 5px; overflow: hidden; margin: 15px 0; }
-        .progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ff758c, #ff7eb3); transition: 0.2s; }
+        /* Màn hình nhập tên */
+        #login-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(47, 53, 66, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
 
-        button { background: #d63384; color: white; border: none; padding: 15px 40px; border-radius: 50px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(214, 51, 132, 0.3); }
-        button:hover { transform: translateY(-2px); background: #b02a6b; }
-        
-        input[type="file"] { display: none; }
+        .login-box {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
 
-        /* Kết quả */
-        #result-screen { display: none; animation: zoomIn 0.5s; }
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-        .score { font-size: 60px; font-weight: 900; color: #d63384; margin: 10px 0; }
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .login-box h2 {
+            color: var(--primary);
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .login-box p {
+            color: var(--text-sub);
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #dfe4ea;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
+        }
+
+        .btn-full { width: 100%; }
+
+        /* Giao diện chính */
+        .header {
+            max-width: 1200px;
+            margin: 0 auto 25px;
+            background: var(--glass);
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-badge {
+            background: #ffeaa7;
+            color: #d35400;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 850px) {
+            .container { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f1f2f6;
+            padding-bottom: 12px;
+        }
+
+        /* Form thêm món mới */
+        .add-custom-form {
+            display: grid;
+            grid-template-columns: 2fr 1.2fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 600px) {
+            .add-custom-form { grid-template-columns: 1fr; }
+        }
+
+        /* Bộ lọc danh mục */
+        .categories {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .cat-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #dfe4ea;
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .cat-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Danh sách gợi ý món */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 12px;
+        }
+
+        .menu-item {
+            background: white;
+            border: 1px solid #f1f2f6;
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            transition: 0.25s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.15);
+        }
+
+        .menu-emoji {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .menu-name {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .menu-cat {
+            font-size: 11px;
+            color: var(--text-sub);
+            background: #f1f2f6;
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        /* Cột bên phải: Danh sách chuẩn bị */
+        .shopping-list {
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .list-item {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .list-item.checked {
+            opacity: 0.6;
+            border-left-color: #2ed573;
+            text-decoration: line-through;
+        }
+
+        .item-info h4 {
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .item-meta {
+            font-size: 12px;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .author-tag {
+            background: #eccc68;
+            color: #2f3542;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .item-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-badge {
+            background: #ff47571a;
+            color: var(--primary);
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .icon-btn {
+            background: #f1f2f6;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-main);
+            transition: 0.2s;
+        }
+
+        .icon-btn:hover { background: #dfe4ea; }
+        .icon-btn.del:hover { background: #ff4757; color: white; }
+        .icon-btn.check:hover { background: #2ed573; color: white; }
+
+        /* Tính năng hay ho: Mini game & Thống kê */
+        .fun-box {
+            margin-top: 20px;
+            background: linear-gradient(135deg, #2f3542, #1e272e);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .fun-box h3 {
+            color: #ffa502;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        #spin-result {
+            margin-top: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #2ed573;
+            min-height: 24px;
+        }
+
+        .status-bar {
+            font-size: 12px;
+            color: #2ed573;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 4px;
+        }
+        .dot {
+            width: 8px; height: 8px;
+            background: #2ed573;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(46, 213, 115, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); }
+        }
     </style>
 </head>
 <body>
 
-<div id="main-card">
-    <div id="init-screen">
-        <h1>AI Beauty Analysis</h1>
-        <p class="subtitle">Phân tích tỉ lệ gương mặt chuẩn Gold Ratio (v6.2)</p>
-        
-        <label for="file-upload" id="upload-zone">
-            <div id="placeholder-content">
-                <span style="font-size: 50px;">📷</span>
-                <p>Nhấn để tải ảnh lên hoặc chụp ảnh</p>
+    <!-- Modal Nhập Tên -->
+    <div id="login-modal">
+        <div class="login-box">
+            <div style="font-size: 48px; margin-bottom: 10px;">🍲🌸</div>
+            <h2>Tiệc Lẩu 20/10</h2>
+            <p>Nhập tên của bạn để cùng hội bạn thân lên thực đơn và phân công chuẩn bị nhé!</p>
+            <div class="input-group">
+                <input type="text" id="username-input" placeholder="Ví dụ: Minh Đẹp Trai, Lan Anh..." maxlength="25">
             </div>
-            <img id="preview-img" src="#" alt="Preview">
-            <div id="scanner"></div>
-        </label>
-        <input type="file" id="file-upload" accept="image/*">
+            <button class="btn btn-full" onclick="joinParty()">
+                <i class="fa-solid fa-utensils"></i> Vào Bàn Tiệc Ngay
+            </button>
+        </div>
+    </div>
 
-        <div class="loading-box" id="loading">
-            <p id="status-text" style="font-weight: bold; color: #d63384;">Đang nhận diện khuôn mặt...</p>
-            <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
-            <p style="font-size: 12px; color: #888;">AI đang tính toán mật độ sắc tố và cấu trúc xương...</p>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-title">
+            <h1>🍲 Lịch Ăn Lẩu 20/10</h1>
+            <div class="status-bar">
+                <span class="dot"></span> <span id="sync-status">Đang đồng bộ dữ liệu trực tiếp...</span>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="user-badge">
+                <i class="fa-solid fa-user-check"></i> <span id="current-user-display">Khách</span>
+            </div>
+            <button class="icon-btn" title="Đổi tên" onclick="changeName()"><i class="fa-solid fa-pen"></i></button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Cột trái: Chọn & Thêm món -->
+        <div class="card">
+            <div class="card-title">
+                <span><i class="fa-solid fa-fire-burner" style="color: var(--primary);"></i> Chọn & Thêm Món Nhúng</span>
+            </div>
+
+            <!-- Form tự thêm món mới -->
+            <div class="add-custom-form">
+                <input type="text" id="custom-name" placeholder="Tên món (VD: Bắp bò Mỹ...)">
+                <select id="custom-cat">
+                    <option value="Thịt & Hải sản">🥩 Thịt & Hải sản</option>
+                    <option value="Rau & Nấm">🥬 Rau & Nấm</option>
+                    <option value="Viên thả lẩu">🍡 Viên thả lẩu</option>
+                    <option value="Nước lẩu & Mì">🍜 Nước lẩu & Mì</option>
+                    <option value="Đồ uống & Khác">🥤 Đồ uống & Khác</option>
+                </select>
+                <input type="text" id="custom-qty" placeholder="SL (VD: 1kg)" value="1 phần">
+                <button class="btn" onclick="addCustomItem()"><i class="fa-solid fa-plus"></i> Thêm</button>
+            </div>
+
+            <!-- Bộ lọc -->
+            <div class="categories" id="category-filters">
+                <button class="cat-btn active" onclick="filterMenu('All', this)">Tất cả</button>
+                <button class="cat-btn" onclick="filterMenu('Thịt & Hải sản', this)">🥩 Thịt & Hải sản</button>
+                <button class="cat-btn" onclick="filterMenu('Viên thả lẩu', this)">🍡 Viên thả lẩu</button>
+                <button class="cat-btn" onclick="filterMenu('Rau & Nấm', this)">🥬 Rau & Nấm</button>
+                <button class="cat-btn" onclick="filterMenu('Nước lẩu & Mì', this)">🍜 Nước lẩu & Mì</button>
+                <button class="cat-btn" onclick="filterMenu('Đồ uống & Khác', this)">🥤 Đồ uống</button>
+            </div>
+
+            <!-- Danh sách gợi ý click nhanh -->
+            <div class="menu-grid" id="suggested-menu"></div>
         </div>
 
-        <button id="btn-start" style="margin-top: 25px; display: none;" onclick="startAnalysis()">BẮT ĐẦU PHÂN TÍCH</button>
+        <!-- Cột phải: Danh sách chốt đơn & Mini game -->
+        <div>
+            <div class="card">
+                <div class="card-title">
+                    <span><i class="fa-solid fa-clipboard-list" style="color: #2ed573;"></i> Danh Sách Chuẩn Bị (<span id="total-items">0</span>)</span>
+                    <button class="icon-btn del" title="Xóa tất cả" onclick="clearAllItems()"><i class="fa-solid fa-trash-can"></i></button>
+                </div>
+
+                <div class="shopping-list" id="shopping-list">
+                    <p style="text-align: center; color: var(--text-sub); padding: 30px 0;">Chưa có món nào. Hãy chọn món bên cạnh nhé!</p>
+                </div>
+            </div>
+
+            <!-- Tính năng hay ho: Vòng quay nhân phẩm -->
+            <div class="fun-box">
+                <h3>🎲 Góc Nhân Phẩm 20/10</h3>
+                <p style="font-size: 13px; color: #ced6e0; margin-bottom: 12px;">Ai sẽ là người rửa bát, đi chợ hoặc nhận quà bất ngờ?</p>
+                <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn" style="background: #ffa502; color: #2f3542; padding: 10px 16px; font-size: 13px;" onclick="spinWheel('rửa bát 🧽')">
+                        Quay người Rửa Bát
+                    </button>
+                    <button class="btn" style="background: #2ed573; color: #2f3542; padding: 10px 16px; font-size: 13px;" onclick="spinWheel('đi chợ 🛒')">
+                        Quay người Đi Chợ
+                    </button>
+                </div>
+                <div id="spin-result"></div>
+            </div>
+        </div>
     </div>
 
-    <div id="result-screen">
-        <h2 style="color: #d63384;">KẾT QUẢ PHÂN TÍCH</h2>
-        <div class="score">9.9/10</div>
-        <p style="font-weight: bold; color: #444;">Đánh giá: Vẻ đẹp mang tầm ảnh hưởng vũ trụ!</p>
-        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-        <p style="font-style: italic; color: #666; line-height: 1.6;">
-            "Dữ liệu cho thấy cấu trúc gương mặt này cực kỳ hài hòa. Tuy nhiên, AI phát hiện thêm một triệu chứng: <b>Bị thằng bạn thân troll.</b>"
-        </p>
-        <h3 style="color: #ff4757;">😂 MÀY BỊ LỪA RỒI CON GÀ! 😂</h3>
-        <p>Thoát web ra rồi nhắn tin rủ tao đi ăn nhanh lên!</p>
-        <button onclick="location.reload()">Kiểm tra lại ❤️</button>
-    </div>
-</div>
+    <!-- Tích hợp Firebase Realtime Database để ai cũng xem được trực tiếp -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-<script>
-    const fileInput = document.getElementById('file-upload');
-    const previewImg = document.getElementById('preview-img');
-    const uploadZone = document.getElementById('placeholder-content');
-    const btnStart = document.getElementById('btn-start');
-    const loadingBox = document.getElementById('loading');
-    const fill = document.getElementById('fill');
-    const statusText = document.getElementById('status-text');
-    const scanner = document.getElementById('scanner');
+        // =========================================================================
+        // HƯỚNG DẪN ĐỂ MỌI NGƯỜI CÙNG XEM ONLINE:
+        // Tạo 1 project miễn phí trên console.firebase.google.com -> Realtime Database
+        // Copy cấu hình firebaseConfig dán đè vào bên dưới. 
+        // Nếu chưa dán, web sẽ tự động chạy ở chế độ lưu trên trình duyệt (LocalStorage).
+        // =========================================================================
+        const firebaseConfig = {
+            databaseURL: "" // Dán link Realtime Database của bạn vào đây (VD: https://ten-project-default-rtdb.firebaseio.com)
+        };
 
-    // Xử lý khi chọn file
-    fileInput.onchange = function(e) {
-        const [file] = fileInput.files;
-        if (file) {
-            previewImg.src = URL.createObjectURL(file);
-            previewImg.style.display = 'block';
-            uploadZone.style.display = 'none';
-            btnStart.style.display = 'inline-block';
+        let useFirebase = false;
+        let db;
+
+        if (firebaseConfig.databaseURL && firebaseConfig.databaseURL.startsWith("http")) {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getDatabase(app);
+                useFirebase = true;
+                document.getElementById('sync-status').innerText = "Đã kết nối Online (Ai cũng xem được)";
+            } catch (e) {
+                console.error("Lỗi Firebase:", e);
+            }
+        } else {
+            document.getElementById('sync-status').innerText = "Chế độ Offline (Dán link Firebase để đồng bộ nhóm)";
+            document.getElementById('sync-status').style.color = "#ffa502";
         }
-    };
 
-    function startAnalysis() {
-        btnStart.style.display = 'none';
-        loadingBox.style.display = 'block';
-        scanner.style.display = 'block';
-        
-        let width = 0;
-        const tasks = [
-            "Đang quét cấu trúc hạ tầng gương mặt...",
-            "Đang đo khoảng cách hai mắt...",
-            "Kiểm tra độ mịn của làn da...",
-            "So sánh với dữ liệu người mẫu quốc tế...",
-            "Đang trích xuất dữ liệu ảnh dìm hàng...",
-            "Hoàn tất quá trình phân tích!"
+        // Dữ liệu gợi ý món ăn
+        const suggestedItems = [
+            { name: "Ba chỉ bò Mỹ", cat: "Thịt & Hải sản", emoji: "🥩", qty: "1 kg" },
+            { name: "Tôm sú tươi", cat: "Thịt & Hải sản", emoji: "🦐", qty: "0.5 kg" },
+            { name: "Mực ống", cat: "Thịt & Hải sản", emoji: "🦑", qty: "0.5 kg" },
+            { name: "Sườn sụn heo", cat: "Thịt & Hải sản", emoji: "🍖", qty: "0.5 kg" },
+            { name: "Đậu hũ phô mai", cat: "Viên thả lẩu", emoji: "🧀", qty: "1 gói" },
+            { name: "Thanh cua", cat: "Viên thả lẩu", emoji: "🦀", qty: "1 gói" },
+            { name: "Bò viên gân", cat: "Viên thả lẩu", emoji: "🍡", qty: "1 gói" },
+            { name: "Rau muống & Cải thảo", cat: "Rau & Nấm", emoji: "🥬", qty: "2 mớ" },
+            { name: "Nấm kim châm", cat: "Rau & Nấm", emoji: "🍄", qty: "3 gói" },
+            { name: "Ngô ngọt", cat: "Rau & Nấm", emoji: "🌽", qty: "2 bắp" },
+            { name: "Cốt lẩu Thái Tomyum", cat: "Nước lẩu & Mì", emoji: "🍲", qty: "2 gói" },
+            { name: "Mì tôm / Miến", cat: "Nước lẩu & Mì", emoji: "🍜", qty: "5 gói" },
+            { name: "Coca / Sting", cat: "Đồ uống & Khác", emoji: "🥤", qty: "1 lốc" },
+            { name: "Trà đào / Nước ép", cat: "Đồ uống & Khác", emoji: "🍹", qty: "2 chai" }
         ];
 
-        let taskIndex = 0;
-        const interval = setInterval(() => {
-            width += 1.5;
-            fill.style.width = width + "%";
-            
-            if(width > (taskIndex + 1) * (100/tasks.length)) {
-                statusText.innerText = tasks[taskIndex];
-                taskIndex++;
+        let currentUser = localStorage.getItem('lau_username') || "";
+        let currentItems = [];
+
+        // Kiểm tra tên người dùng khi tải trang
+        window.onload = () => {
+            renderSuggestedMenu('All');
+            if (currentUser) {
+                document.getElementById('login-modal').style.display = 'none';
+                document.getElementById('current-user-display').innerText = currentUser;
+            }
+            listenData();
+        };
+
+        // Đăng nhập tên
+        window.joinParty = () => {
+            const input = document.getElementById('username-input').value.trim();
+            if (!input) return alert("Vui lòng nhập tên của bạn nhé!");
+            currentUser = input;
+            localStorage.setItem('lau_username', currentUser);
+            document.getElementById('current-user-display').innerText = currentUser;
+            document.getElementById('login-modal').style.display = 'none';
+            confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
+        };
+
+        window.changeName = () => {
+            document.getElementById('username-input').value = currentUser;
+            document.getElementById('login-modal').style.display = 'flex';
+        };
+
+        // Hiển thị menu gợi ý
+        window.renderSuggestedMenu = (category) => {
+            const container = document.getElementById('suggested-menu');
+            container.innerHTML = '';
+            const filtered = category === 'All' ? suggestedItems : suggestedItems.filter(i => i.cat === category);
+
+            filtered.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'menu-item';
+                div.innerHTML = `
+                    <span class="menu-emoji">${item.emoji}</span>
+                    <div class="menu-name">${item.name}</div>
+                    <span class="menu-cat">${item.qty}</span>
+                `;
+                div.onclick = () => saveItem(item.name, item.cat, item.qty, item.emoji);
+                container.appendChild(div);
+            });
+        };
+
+        window.filterMenu = (cat, btn) => {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderSuggestedMenu(cat);
+        };
+
+        // Thêm món tự nhập
+        window.addCustomItem = () => {
+            const name = document.getElementById('custom-name').value.trim();
+            const cat = document.getElementById('custom-cat').value;
+            const qty = document.getElementById('custom-qty').value.trim() || "1 phần";
+
+            if (!name) return alert("Bạn chưa nhập tên món!");
+            saveItem(name, cat, qty, "🍽️");
+            document.getElementById('custom-name').value = '';
+        };
+
+        // Lưu món vào Database
+        function saveItem(name, cat, qty, emoji) {
+            if (!currentUser) return changeName();
+            const newItem = {
+                name,
+                cat,
+                qty,
+                emoji,
+                addedBy: currentUser,
+                checked: false,
+                timestamp: Date.now()
+            };
+
+            if (useFirebase) {
+                const listRef = ref(db, 'lau2010_items');
+                push(listRef, newItem);
+            } else {
+                newItem.id = Date.now().toString();
+                currentItems.push(newItem);
+                localStorage.setItem('lau2010_local', JSON.stringify(currentItems));
+                renderShoppingList();
+            }
+        }
+
+        // Lắng nghe dữ liệu thay đổi
+        function listenData() {
+            if (useFirebase) {
+                const listRef = ref(db, 'lau2010_items');
+                onValue(listRef, (snapshot) => {
+                    const data = snapshot.val();
+                    currentItems = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+                    renderShoppingList();
+                });
+            } else {
+                currentItems = JSON.parse(localStorage.getItem('lau2010_local') || "[]");
+                renderShoppingList();
+            }
+        }
+
+        // Hiển thị danh sách bên phải
+        function renderShoppingList() {
+            const listEl = document.getElementById('shopping-list');
+            document.getElementById('total-items').innerText = currentItems.length;
+
+            if (currentItems.length === 0) {
+                listEl.innerHTML = `<p style="text-align: center; color: var(--text-sub); padding: 30px 0;">Chưa có món nào. Hãy chọn món bên cạnh nhé!</p>`;
+                return;
             }
 
-            if (width >= 100) {
-                clearInterval(interval);
-                setTimeout(showFinal, 800);
+            listEl.innerHTML = '';
+            currentItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = `list-item ${item.checked ? 'checked' : ''}`;
+                div.innerHTML = `
+                    <div class="item-info">
+                        <h4>${item.emoji || '🍲'} ${item.name}</h4>
+                        <div class="item-meta">
+                            <span class="author-tag"><i class="fa-solid fa-user"></i> ${item.addedBy}</span>
+                            <span>• ${item.cat}</span>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <span class="qty-badge">${item.qty}</span>
+                        <button class="icon-btn check" title="Đánh dấu đã mua" onclick="toggleCheck('${item.id}', ${item.checked})">
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                        <button class="icon-btn del" title="Xóa món" onclick="deleteItem('${item.id}')">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                `;
+                listEl.appendChild(div);
+            });
+        }
+
+        // Đánh dấu đã chuẩn bị xong
+        window.toggleCheck = (id, currentStatus) => {
+            if (useFirebase) {
+                update(ref(db, `lau2010_items/${id}`), { checked: !currentStatus });
+            } else {
+                const idx = currentItems.findIndex(i => i.id === id);
+                if (idx > -1) currentItems[idx].checked = !currentStatus;
+                localStorage.setItem('lau2010_local', JSON.stringify(currentItems));
+                renderShoppingList();
             }
-        }, 80);
-    }
+        };
 
-    function showFinal() {
-        document.getElementById('init-screen').style.display = 'none';
-        document.getElementById('result-screen').style.display = 'block';
-        
-        // Âm thanh báo hiệu hoàn tất (Ting!)
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.frequency.value = 1200;
-        gain.gain.value = 0.1;
-        osc.start();
-        setTimeout(() => osc.stop(), 200);
-    }
-</script>
+        // Xóa 1 món
+        window.deleteItem = (id) => {
+            if (useFirebase) {
+                remove(ref(db, `lau2010_items/${id}`));
+            } else {
+                currentItems = currentItems.filter(i => i.id !== id);
+                localStorage.setItem('lau2010_local', JSON.stringify(currentItems));
+                renderShoppingList();
+            }
+        };
 
+        // Xóa tất cả
+        window.clearAllItems = () => {
+            if (!confirm("Bạn có chắc muốn xóa toàn bộ danh sách không?")) return;
+            if (useFirebase) {
+                remove(ref(db, 'lau2010_items'));
+            } else {
+                currentItems = [];
+                localStorage.setItem('lau2010_local', "[]");
+                renderShoppingList();
+            }
+        };
+
+        // Mini game quay thưởng từ danh sách những người đã thêm món
+        window.spinWheel = (task) => {
+            const participants = [...new Set(currentItems.map(i => i.addedBy))];
+            if (currentUser && !participants.includes(currentUser)) participants.push(currentUser);
+
+            if (participants.length === 0) {
+                return alert("Chưa có thành viên nào tham gia!");
+            }
+
+            const resultEl = document.getElementById('spin-result');
+            let count = 0;
+            const interval = setInterval(() => {
+                const randomName = participants[Math.floor(Math.random() * participants.length)];
+                resultEl.innerText = `Đang quay... ${randomName}`;
+                count++;
+                if (count > 15) {
+                    clearInterval(interval);
+                    const winner = participants[Math.floor(Math.random() * participants.length)];
+                    resultEl.innerHTML = `🎉 Chúc mừng <u>${winner}</u> trúng suất ${task}!`;
+                    confetti({ particleCount: 100, spread: 80, origin: { y: 0.7 } });
+                }
+            }, 80);
+        };
+    </script>
 </body>
 </html>
