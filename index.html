@@ -352,7 +352,6 @@
         .icon-btn.del:hover { background: #ff4757; color: white; }
         .icon-btn.check:hover { background: #2ed573; color: white; }
 
-        /* Tính năng hay ho: Mini game & Thống kê */
         .fun-box {
             margin-top: 20px;
             background: linear-gradient(135deg, #2f3542, #1e272e);
@@ -400,14 +399,14 @@
 </head>
 <body>
 
-    <!-- Modal Nhập Tên -->
-    <div id="login-modal">
+    <!-- Modal Nhập Tên (Chỉ hiện 1 lần duy nhất, lần sau tự nhớ) -->
+    <div id="login-modal" style="display: none;">
         <div class="login-box">
             <div style="font-size: 48px; margin-bottom: 10px;">🍲🌸</div>
             <h2>Tiệc Lẩu 20/10</h2>
-            <p>Nhập tên của bạn để cùng hội bạn thân lên thực đơn và phân công chuẩn bị nhé!</p>
+            <p>Nhập tên của bạn để cùng hội bạn thân lên thực đơn nhé!</p>
             <div class="input-group">
-                <input type="text" id="username-input" placeholder="Ví dụ: Minh Đẹp Trai, Chi Huy..." maxlength="25">
+                <input type="text" id="username-input" placeholder="Ví dụ: Minh Dzs1 kimson, Chi Huy..." maxlength="25">
             </div>
             <button class="btn btn-full" onclick="joinParty()">
                 <i class="fa-solid fa-utensils"></i> Vào Bàn Tiệc Ngay
@@ -420,7 +419,7 @@
         <div class="header-title">
             <h1>🍲 Lịch Ăn Lẩu 20/10</h1>
             <div class="status-bar">
-                <span class="dot"></span> <span id="sync-status">Đang đồng bộ dữ liệu trực tiếp...</span>
+                <span class="dot"></span> <span id="sync-status">Đang kết nối hệ thống...</span>
             </div>
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
@@ -449,7 +448,7 @@
                     <option value="Nước lẩu & Mì">🍜 Nước lẩu & Mì</option>
                     <option value="Đồ uống & Khác">🥤 Đồ uống & Khác</option>
                 </select>
-                <input type="text" id="custom-qty" placeholder="SL (VD: 1kg)" value="1 phần">
+                <input type="text" id="custom-qty" placeholder="SL" value="1 phần">
                 <button class="btn" onclick="addCustomItem()"><i class="fa-solid fa-plus"></i> Thêm</button>
             </div>
 
@@ -480,10 +479,10 @@
                 </div>
             </div>
 
-            <!-- Tính năng hay ho: Vòng quay nhân phẩm -->
+            <!-- Mini game -->
             <div class="fun-box">
                 <h3>🎲 Góc Nhân Phẩm 20/10</h3>
-                <p style="font-size: 13px; color: #ced6e0; margin-bottom: 12px;">Ai sẽ là người rửa bát, đi chợ hoặc nhận quà bất ngờ?</p>
+                <p style="font-size: 13px; color: #ced6e0; margin-bottom: 12px;">Ai sẽ là người rửa bát hoặc đi chợ?</p>
                 <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
                     <button class="btn" style="background: #ffa502; color: #2f3542; padding: 10px 16px; font-size: 13px;" onclick="spinWheel('rửa bát 🧽')">
                         Quay người Rửa Bát
@@ -497,19 +496,13 @@
         </div>
     </div>
 
-    <!-- Tích hợp Firebase Realtime Database để ai cũng xem được trực tiếp -->
+    <!-- Script xử lý -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, push, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // =========================================================================
-        // HƯỚNG DẪN ĐỂ MỌI NGƯỜI CÙNG XEM ONLINE:
-        // Tạo 1 project miễn phí trên console.firebase.google.com -> Realtime Database
-        // Copy cấu hình firebaseConfig dán đè vào bên dưới. 
-        // Nếu chưa dán, web sẽ tự động chạy ở chế độ lưu trên trình duyệt (LocalStorage).
-        // =========================================================================
         const firebaseConfig = {
-            databaseURL: "" // Dán link Realtime Database của bạn vào đây (VD: https://ten-project-default-rtdb.firebaseio.com)
+            databaseURL: "" // Nếu bạn đã dùng Firebase thì dán link vào đây, bỏ trống sẽ chạy offline trên máy
         };
 
         let useFirebase = false;
@@ -520,16 +513,15 @@
                 const app = initializeApp(firebaseConfig);
                 db = getDatabase(app);
                 useFirebase = true;
-                document.getElementById('sync-status').innerText = "Đã kết nối Online (Ai cũng xem được)";
+                document.getElementById('sync-status').innerText = "Đã kết nối Online";
             } catch (e) {
-                console.error("Lỗi Firebase:", e);
+                console.error(e);
             }
         } else {
-            document.getElementById('sync-status').innerText = "Chế độ Offline (Dán link Firebase để đồng bộ nhóm)";
+            document.getElementById('sync-status').innerText = "Chế độ Local Storage";
             document.getElementById('sync-status').style.color = "#ffa502";
         }
 
-        // Dữ liệu gợi ý món ăn
         const suggestedItems = [
             { name: "Ba chỉ bò Mỹ", cat: "Thịt & Hải sản", emoji: "🥩", qty: "1 kg" },
             { name: "Tôm sú tươi", cat: "Thịt & Hải sản", emoji: "🦐", qty: "0.5 kg" },
@@ -550,33 +542,35 @@
         let currentUser = localStorage.getItem('lau_username') || "";
         let currentItems = [];
 
-        // Kiểm tra tên người dùng khi tải trang
         window.onload = () => {
             renderSuggestedMenu('All');
-            if (currentUser) {
+            
+            // KIỂM TRA: Nếu chưa có tên trong bộ nhớ thì mới hiện bảng nhập tên
+            if (!currentUser) {
+                document.getElementById('login-modal').style.display = 'flex';
+            } else {
                 document.getElementById('login-modal').style.display = 'none';
                 document.getElementById('current-user-display').innerText = currentUser;
             }
             listenData();
         };
 
-        // Đăng nhập tên
         window.joinParty = () => {
             const input = document.getElementById('username-input').value.trim();
             if (!input) return alert("Vui lòng nhập tên của bạn nhé!");
             currentUser = input;
-            localStorage.setItem('lau_username', currentUser);
+            localStorage.setItem('lau_username', currentUser); // Lưu tên vĩnh viễn trên trình duyệt
             document.getElementById('current-user-display').innerText = currentUser;
             document.getElementById('login-modal').style.display = 'none';
             confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
         };
 
+        // Nút đổi tên (nếu lỡ nhập sai tên)
         window.changeName = () => {
             document.getElementById('username-input').value = currentUser;
             document.getElementById('login-modal').style.display = 'flex';
         };
 
-        // Hiển thị menu gợi ý
         window.renderSuggestedMenu = (category) => {
             const container = document.getElementById('suggested-menu');
             container.innerHTML = '';
@@ -601,7 +595,6 @@
             renderSuggestedMenu(cat);
         };
 
-        // Thêm món tự nhập
         window.addCustomItem = () => {
             const name = document.getElementById('custom-name').value.trim();
             const cat = document.getElementById('custom-cat').value;
@@ -612,7 +605,6 @@
             document.getElementById('custom-name').value = '';
         };
 
-        // Lưu món vào Database
         function saveItem(name, cat, qty, emoji) {
             if (!currentUser) return changeName();
             const newItem = {
@@ -636,7 +628,6 @@
             }
         }
 
-        // Lắng nghe dữ liệu thay đổi
         function listenData() {
             if (useFirebase) {
                 const listRef = ref(db, 'lau2010_items');
@@ -651,7 +642,6 @@
             }
         }
 
-        // Hiển thị danh sách bên phải
         function renderShoppingList() {
             const listEl = document.getElementById('shopping-list');
             document.getElementById('total-items').innerText = currentItems.length;
@@ -675,10 +665,10 @@
                     </div>
                     <div class="item-actions">
                         <span class="qty-badge">${item.qty}</span>
-                        <button class="icon-btn check" title="Đánh dấu đã mua" onclick="toggleCheck('${item.id}', ${item.checked})">
+                        <button class="icon-btn check" title="Đánh dấu" onclick="toggleCheck('${item.id}', ${item.checked})">
                             <i class="fa-solid fa-check"></i>
                         </button>
-                        <button class="icon-btn del" title="Xóa món" onclick="deleteItem('${item.id}')">
+                        <button class="icon-btn del" title="Xóa" onclick="deleteItem('${item.id}')">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
@@ -687,7 +677,6 @@
             });
         }
 
-        // Đánh dấu đã chuẩn bị xong
         window.toggleCheck = (id, currentStatus) => {
             if (useFirebase) {
                 update(ref(db, `lau2010_items/${id}`), { checked: !currentStatus });
@@ -699,7 +688,6 @@
             }
         };
 
-        // Xóa 1 món
         window.deleteItem = (id) => {
             if (useFirebase) {
                 remove(ref(db, `lau2010_items/${id}`));
@@ -710,7 +698,6 @@
             }
         };
 
-        // Xóa tất cả
         window.clearAllItems = () => {
             if (!confirm("Bạn có chắc muốn xóa toàn bộ danh sách không?")) return;
             if (useFirebase) {
@@ -722,14 +709,11 @@
             }
         };
 
-        // Mini game quay thưởng từ danh sách những người đã thêm món
         window.spinWheel = (task) => {
             const participants = [...new Set(currentItems.map(i => i.addedBy))];
             if (currentUser && !participants.includes(currentUser)) participants.push(currentUser);
 
-            if (participants.length === 0) {
-                return alert("Chưa có thành viên nào tham gia!");
-            }
+            if (participants.length === 0) return alert("Chưa có thành viên nào tham gia!");
 
             const resultEl = document.getElementById('spin-result');
             let count = 0;
